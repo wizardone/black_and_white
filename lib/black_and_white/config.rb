@@ -1,6 +1,6 @@
 module BlackAndWhite
   class Config
-    attr_accessor :ab_table, :ab_class
+    attr_accessor :bw_table, :bw_class
 
     def initialize
 

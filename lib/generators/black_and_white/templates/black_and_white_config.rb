@@ -1,4 +1,4 @@
 BlackAndWhite.configure do |config|
-  config.ab_class = 'User'
-  config.ab_table = 'ab_tests'
+  config.bw_class = 'User'
+  config.bw_table = 'ab_tests'
 end
