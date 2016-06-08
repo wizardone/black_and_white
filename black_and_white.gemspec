@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.email         = ["wizard.oneandonly@gmail.com"]
 
   spec.summary       = %q{A/B testing}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.description   = %q{A/B testing made easy}
+  spec.homepage      = "https://github.com/wizardone/black_and_white"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or

@@ -4,7 +4,7 @@ module BlackAndWhite
       protected
 
       def bw_tests_table_name
-        BlackAndWhite.config.bw_table
+        BlackAndWhite.config.bw_main_table
       end
 
       def bw_tests_table_data
@@ -17,8 +17,9 @@ RUBY
       end
 
       def bw_relations_table_name
-        [bw_tests_table_name, bw_tests_class.downcase.pluralize]
-          .join('_')
+        # [bw_tests_table_name, bw_tests_class.downcase.pluralize]
+        #  .join('_')
+        BlackAndWhite.config.bw_join_table
       end
 
       def bw_relations_table_data
