@@ -1,10 +1,12 @@
 #require 'active_record/generators/migration'
 require 'rails/generators/active_record'
+require 'black_and_white/helpers/database'
 
 module BlackAndWhite
   module Generators
-    class MigrationGenerator < Rails::Generators::Base # ActiveRecord::Generators::Base
+    class MigrationsGenerator < Rails::Generators::Base # ActiveRecord::Generators::Base
       include Rails::Generators::Migration
+      include BlackAndWhite::Helpers::Database
       # include ActiveRecord::Generators::Migration
       # For some reason including ActiveRecord::Generators::Migration causes
       # the generator to not appear when calling `rails g`.
@@ -22,25 +24,14 @@ module BlackAndWhite
       source_root File.expand_path('../templates', __FILE__)
 
       desc  <<DESC
-        Generator that copies the migration for generating the a/b tests database table
+        Generator that copies the migrations for generating the a/b tests database table and relations into the
+        main db/migrate workspace
 DESC
 
       def copy_migration
-        migration_template 'black_and_white_migration.rb', "db/migrate/create_#{table_name}.rb", migration_version: migration_version
-      end
-
-      protected
-
-      def table_name
-        BlackAndWhite.config.bw_table
-      end
-
-      def migration_version
-        if Rails.version.start_with? '5'
-         "[#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}]"
-        end
+        migration_template 'create_ab_tests_migration.rb', "db/migrate/create_#{ab_tests_table_name}.rb", migration_version: migration_version
+        migration_template 'create_ab_tests_relation_migration.rb', "db/migrate/create_#{ab_relations_table_name}.rb", migration_version: migration_version
       end
     end
   end
 end
-
