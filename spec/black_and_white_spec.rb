@@ -1,5 +1,4 @@
 require 'spec_helper'
-
 describe BlackAndWhite do
   it 'has a version number' do
     expect(BlackAndWhite::VERSION).not_to be nil
@@ -15,4 +14,21 @@ describe BlackAndWhite do
     end
   end
 
+  context 'ActiveRecord' do
+    context 'helper methods' do
+      subject { Support::ActiveRecord::Object.new }
+
+      it 'returns the configuration main table name' do
+        expect(subject.bw_tests_table_name).to eq(BlackAndWhite.config.bw_main_table)
+      end
+
+      it 'returns the configuration relation table name' do
+        expect(subject.bw_relations_table_name).to eq(BlackAndWhite.config.bw_join_table)
+      end
+
+      it 'returns the configuration class name for a/b testing' do
+        expect(subject.bw_tests_class).to eq(BlackAndWhite.config.bw_class)
+      end
+    end
+  end
 end

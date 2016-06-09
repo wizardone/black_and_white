@@ -1,7 +1,6 @@
 module BlackAndWhite
   module Helpers
     module Database
-      protected
 
       def bw_tests_table_name
         BlackAndWhite.config.bw_main_table
@@ -11,7 +10,6 @@ module BlackAndWhite
         <<RUBY
           t.string :name, unique: true, null: false
           t.boolean :active, default: false
-          t.references #{bw_tests_class.downcase}
           t.timestamps null: false
 RUBY
       end
