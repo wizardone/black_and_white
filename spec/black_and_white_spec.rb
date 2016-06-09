@@ -1,4 +1,5 @@
 require 'spec_helper'
+
 describe BlackAndWhite do
   it 'has a version number' do
     expect(BlackAndWhite::VERSION).not_to be nil
@@ -29,6 +30,14 @@ describe BlackAndWhite do
       it 'returns the configuration class name for a/b testing' do
         expect(subject.bw_tests_class).to eq(BlackAndWhite.config.bw_class)
       end
+    end
+  end
+
+  context 'ActiveRecord::Test' do
+    subject { BlackAndWhite::ActiveRecord::Test }
+
+    it 'returns the proper table name' do
+      expect(subject.table_name.to_sym).to eq(BlackAndWhite.config.bw_main_table)
     end
   end
 end

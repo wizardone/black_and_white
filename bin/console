@@ -1,11 +1,17 @@
 #!/usr/bin/env ruby
 
 require "bundler/setup"
-require "black_and_white"
+require "black_and_white/config"
 
 # You can add fixtures and/or initialization code here to make experimenting
 # with your gem easier. You can also use a different console, if you like.
+BlackAndWhite.configure do |config|
+  config.bw_class = 'User'
+  config.bw_main_table = :ab_tests
+  config.bw_join_table = :ab_tests_users
+end
 
+require "black_and_white"
 # (If you use this, don't forget to add pry to your Gemfile!)
 # require "pry"
 # Pry.start
