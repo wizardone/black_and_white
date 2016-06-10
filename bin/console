@@ -12,6 +12,8 @@ BlackAndWhite.configure do |config|
 end
 
 require "black_and_white"
+require "black_and_white/active_record/participant"
+require "black_and_white/active_record/test"
 # (If you use this, don't forget to add pry to your Gemfile!)
 # require "pry"
 # Pry.start
