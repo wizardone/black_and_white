@@ -21,8 +21,19 @@ Or install it yourself as:
     $ gem install black_and_white
 
 ## Usage
-
-TODO: Write usage instructions here
+Black And White is meant to work with Rails for the moment. In order to
+use it first run:
+```ruby
+rails g black_and_white:config
+```
+this will create a `black_and_white.rb` config file in
+`config/initializers` with some default values.
+After this run:
+```ruby
+rails g black_and_white:migrations
+```
+this will create the necessary migrations in the `db/migrate` folder.
+Review them and them feel free to migrate.
 
 ## Development
 
