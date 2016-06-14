@@ -7,7 +7,8 @@ module BlackAndWhite
     class Test < ::ActiveRecord::Base
       self.table_name = BlackAndWhite.config.bw_main_table
 
-      has_and_belongs_to_many BlackAndWhite.config.bw_class.downcase.pluralize.to_sym
+      has_and_belongs_to_many BlackAndWhite.config.bw_class.downcase.pluralize.to_sym,
+                              join_table: BlackAndWhite.config.bw_join_table
     end
   end
 end
