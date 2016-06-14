@@ -17,7 +17,7 @@ module BlackAndWhite
       Rails::Generators::Migration::ClassMethods.class_eval do
         def next_migration_number(dirname)
           next_migration_number = current_migration_number(dirname) + 1
-          ActiveRecord::Migration.next_migration_number(next_migration_number)
+          ::ActiveRecord::Migration.next_migration_number(next_migration_number)
         end
       end
 
@@ -29,7 +29,7 @@ module BlackAndWhite
 DESC
 
       def copy_migration
-        migration_template 'create_ab_tests_migration.rb', "db/migrate/create_#{bw_tests_table_name}.rb", migration_version: migration_version
+        migration_template 'create_ab_tests_migration.rb', "db/migrate/create_#{bw_tests_table_name_pluralize}.rb", migration_version: migration_version
         migration_template 'create_ab_tests_relation_migration.rb', "db/migrate/create_#{bw_relations_table_name}.rb", migration_version: migration_version
       end
     end

@@ -6,6 +6,10 @@ module BlackAndWhite
         BlackAndWhite.config.bw_main_table
       end
 
+      def bw_tests_table_name_pluralize
+        BlackAndWhite.config.bw_main_table.to_s.pluralize
+      end
+
       def bw_tests_table_data
         <<RUBY
           t.string :name, unique: true, null: false
@@ -14,17 +18,15 @@ module BlackAndWhite
 RUBY
       end
 
-      def bw_relations_table_name
-        # [bw_tests_table_name, bw_tests_class.downcase.pluralize]
-        #  .join('_')
-        BlackAndWhite.config.bw_join_table
-      end
-
       def bw_relations_table_data
         <<RUBY
         t.integer :#{bw_tests_class.downcase}_id, null: false
         t.integer :#{bw_tests_table_name}_id, null: false
 RUBY
+      end
+
+      def bw_relations_table_name
+        BlackAndWhite.config.bw_join_table
       end
 
       def bw_tests_class
