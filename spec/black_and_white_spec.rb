@@ -40,12 +40,4 @@ describe BlackAndWhite do
       expect(subject.table_name.to_sym).to eq(BlackAndWhite.config.bw_main_table)
     end
   end
-
-  context 'ActiveRecord::Participant' do
-    subject { BlackAndWhite::ActiveRecord::Participant }
-
-    it 'returns the proper table name' do
-      expect(subject.table_name.to_sym).to eq(BlackAndWhite.config.bw_main_table)
-    end
-  end
 end
