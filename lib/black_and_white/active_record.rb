@@ -9,17 +9,22 @@ module BlackAndWhite
                               join_table: BlackAndWhite.config.bw_join_table,
                               association_foreign_key: 'ab_test_id'
 
-      def participate(ab_test, &block)
-        if ab_test_exists?(ab_test)
-          self.ab_tests.create!(ab_test_id: BlackAndWhite::ActiveRecord::Test.find_by(name: ab_test).id)
+      def participate(test_name, &block)
+        if ab_test = fetch_ab_test(test_name)
+          ab_tests << ab_test
         else
           raise "no A/B Test with name #{ab_test} exists"
         end
       end
 
+      def participates?(test_name)
+        ab_tests.where(name: test_name).any?
+      end
+
       private
-      def ab_test_exists?(ab_test)
-        BlackAndWhite::ActiveRecord::Test.exists?(name: ab_test)
+
+      def fetch_ab_test(name)
+        BlackAndWhite::ActiveRecord::Test.find_by(name: name)
       end
     end
   end
