@@ -14,7 +14,7 @@ module BlackAndWhite
     def initialize
       @bw_main_table = :ab_tests
       @bw_join_table = :ab_tests_users
-      @bw_class = User
+      @bw_class = 'User'
       @bw_class_table = :users
     end
   end

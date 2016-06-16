@@ -9,6 +9,16 @@ module BlackAndWhite
 
       has_and_belongs_to_many BlackAndWhite.config.bw_class_table,
                               join_table: BlackAndWhite.config.bw_join_table
+
+      def activate!
+        self.active = true
+        save!
+      end
+
+      def deactivate!
+        self.active = false
+        save!
+      end
     end
   end
 end
