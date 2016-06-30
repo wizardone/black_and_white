@@ -17,7 +17,9 @@ describe BlackAndWhite do
 
   context 'ActiveRecord' do
     context 'helper methods' do
-      subject { Support::ActiveRecord::Object.new }
+      subject do
+        Class.new { extend BlackAndWhite::Helpers::Database }
+      end
 
       it 'returns the configuration main table name' do
         expect(subject.bw_tests_table_name).to eq(BlackAndWhite.config.bw_main_table)
