@@ -2,6 +2,7 @@ require "black_and_white/version"
 require "black_and_white/config"
 require "black_and_white/hooks"
 require "black_and_white/active_record"
+require "black_and_white/helpers/utils"
 
 module BlackAndWhite
   def self.participate(ab_test, object, &block)
