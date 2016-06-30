@@ -42,4 +42,12 @@ describe BlackAndWhite do
       expect(subject.table_name.to_sym).to eq(BlackAndWhite.config.bw_main_table)
     end
   end
+
+  context 'Main model used for A/B testing' do
+    subject { User.new }
+
+    it 'does not participate in any ab tests by default' do
+      expect(subject.ab_tests.any?).to eq false
+    end
+  end
 end
