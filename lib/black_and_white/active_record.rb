@@ -10,7 +10,8 @@ module BlackAndWhite
                               association_foreign_key: 'ab_test_id'
 
       def participate(test_name, &block)
-        if ab_test = fetch_ab_test(test_name)
+        ab_test = fetch_ab_test(test_name)
+        if ab_test.present?
           ab_tests << ab_test
         else
           raise "no A/B Test with name #{ab_test} exists"
