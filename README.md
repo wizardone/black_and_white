@@ -34,7 +34,7 @@ After this run:
 rails g black_and_white:migrations
 ```
 this will create the necessary migrations in the `db/migrate` folder.
-Review them and them feel free to migrate.
+Review them and then feel free to migrate.
 
 ## Development
 
