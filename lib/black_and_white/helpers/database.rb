@@ -1,11 +1,6 @@
 module BlackAndWhite
   module Helpers
     module Database
-
-      def bw_tests_table_name
-        BlackAndWhite.config.bw_main_table
-      end
-
       def bw_tests_table_name_pluralize
         BlackAndWhite.config.bw_main_table.to_s.pluralize
       end
@@ -20,8 +15,8 @@ RUBY
 
       def bw_relations_table_data
         <<RUBY
-        t.integer :#{bw_tests_class.downcase}_id, null: false
-        t.integer :#{bw_tests_table_name}_id, null: false
+        t.references :#{bw_tests_class_table}, index: true
+        t.references :#{bw_tests_table_name_pluralize}, index: true
 RUBY
       end
 
@@ -29,8 +24,16 @@ RUBY
         BlackAndWhite.config.bw_join_table
       end
 
+      def bw_tests_table_name
+        BlackAndWhite.config.bw_main_table
+      end
+
       def bw_tests_class
         BlackAndWhite.config.bw_class
+      end
+
+      def bw_tests_class_table
+        BlackAndWhite.config.bw_class_table
       end
 
       def migration_version
