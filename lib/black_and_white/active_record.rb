@@ -1,4 +1,6 @@
 require 'active_support/concern'
+require 'black_and_white/active_record/error'
+
 module BlackAndWhite
   module ActiveRecord
     extend ActiveSupport::Concern
@@ -6,15 +8,14 @@ module BlackAndWhite
     included do
       has_and_belongs_to_many :ab_tests,
                               class_name: '::BlackAndWhite::ActiveRecord::Test',
-                              join_table: BlackAndWhite.config.bw_join_table,
-                              association_foreign_key: 'ab_test_id'
+                              join_table: BlackAndWhite.config.bw_join_table
 
       def participate(test_name, &block)
         ab_test = fetch_ab_test(test_name)
         if ab_test.present?
           ab_tests << ab_test
         else
-          raise "no A/B Test with name #{ab_test} exists"
+          raise AbTestError, "no A/B Test with name #{test_name} exists"
         end
       end
 

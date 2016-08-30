@@ -32,6 +32,11 @@ describe BlackAndWhite do
       it 'returns the configuration class name for a/b testing' do
         expect(subject.bw_tests_class).to eq(BlackAndWhite.config.bw_class)
       end
+
+      it 'returns the configuration main model table' do
+        expect(subject.bw_tests_class_table)
+          .to eq(BlackAndWhite.config.bw_class_table)
+      end
     end
   end
 
@@ -48,6 +53,12 @@ describe BlackAndWhite do
 
     it 'does not participate in any ab tests by default' do
       expect(subject.ab_tests.any?).to eq false
+    end
+
+    it 'raises an error when no ab test with the given name exists' do
+      expect {
+        subject.participate('test')
+      }.to raise_error BlackAndWhite::ActiveRecord::AbTestError
     end
   end
 end
