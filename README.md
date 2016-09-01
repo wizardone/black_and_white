@@ -1,5 +1,5 @@
 # BlackAndWhite
-[![Build Status](https://travis-ci.org/wizardone/black_and_white.svg?branch=master)](https://travis-ci.org/wizardone/black_and_white)
+[![Build Status](https://travis-ci.org/wizardone/black_and_white.svg?branch=master)](https://travis-ci.org/wizardone/black_and_white) [![Coverage Status](https://coveralls.io/repos/github/wizardone/black_and_white/badge.svg?branch=HEAD)](https://coveralls.io/github/wizardone/black_and_white?branch=HEAD)
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/black_and_white`. To experiment with that code, run `bin/console` for an interactive prompt.
 
