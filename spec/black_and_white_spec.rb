@@ -55,10 +55,20 @@ describe BlackAndWhite do
       expect(subject.ab_tests.any?).to eq false
     end
 
-    it 'raises an error when no ab test with the given name exists' do
-      expect {
-        subject.participate('test')
-      }.to raise_error BlackAndWhite::ActiveRecord::AbTestError
+    context 'participate!' do
+      it 'raises an error when no ab test with the given name exists' do
+        expect {
+          subject.participate!('test')
+        }.to raise_error BlackAndWhite::ActiveRecord::AbTestError
+      end
+
+      it 'participates in an ab test' do
+        BlackAndWhite::ActiveRecord::Test.create!(name: 'test')
+        subject.participate!('test')
+
+        expect(subject.ab_tests).not_to be_empty
+        expect(subject.ab_tests.first.name).to eq('test')
+      end
     end
   end
 end
