@@ -46,6 +46,20 @@ describe BlackAndWhite do
     it 'returns the proper table name' do
       expect(subject.table_name.to_sym).to eq(BlackAndWhite.config.bw_main_table)
     end
+
+    it 'activates an a/b test' do
+      test = subject.new
+      test.activate!
+
+      expect(test.active).to eq(true)
+    end
+
+    it 'deactivates an a/b test' do
+      test = subject.new
+      test.deactivate!
+
+      expect(test.active).to eq(false)
+    end
   end
 
   context 'Main model used for A/B testing' do
