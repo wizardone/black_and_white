@@ -1,5 +1,5 @@
 module BlackAndWhite
   module ActiveRecord
-    class AbTestError < StandardError; end
+    AbTestError = Class.new(StandardError)
   end
 end

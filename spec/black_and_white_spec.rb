@@ -72,16 +72,36 @@ describe BlackAndWhite do
     context 'participate!' do
       it 'raises an error when no ab test with the given name exists' do
         expect {
-          subject.participate!('test')
+          subject.ab_participate!('test')
         }.to raise_error BlackAndWhite::ActiveRecord::AbTestError
       end
 
-      it 'participates in an ab test' do
-        BlackAndWhite::ActiveRecord::Test.create!(name: 'test')
-        subject.participate!('test')
+      it 'participates in an ab test without any conditions' do
+        BlackAndWhite::ActiveRecord::Test.create!(name: 'ab_test')
+        subject.ab_participate!('ab_test')
 
         expect(subject.ab_tests).not_to be_empty
-        expect(subject.ab_tests.first.name).to eq('test')
+        expect(subject.ab_tests.first.name).to eq('ab_test')
+      end
+
+      it 'participates in an ab test if certain conditions met' do
+        BlackAndWhite::ActiveRecord::Test.create!(name: 'ab_test_with_conditions')
+        subject.ab_participate!('ab_test_with_conditions') do |subject|
+          subject.active == true
+        end
+
+        expect(subject.ab_tests).not_to be_empty
+        expect(subject.ab_tests.first.name).to eq('ab_test_with_conditions')
+      end
+
+      it 'does not participates in an ab test if certain conditions are not met' do
+        BlackAndWhite::ActiveRecord::Test.create!(name: 'ab_test_with_conditions')
+        subject.ab_participate!('ab_test_with_conditions') do |subject|
+          subject.active == false
+        end
+
+        expect(subject.ab_tests).to be_empty
+        expect(subject.participates?('ab_test_with_conditions')).to eq(false)
       end
     end
   end

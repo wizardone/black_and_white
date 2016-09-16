@@ -8,5 +8,3 @@ module BlackAndWhite
   def self.participate(ab_test, object, &block)
   end
 end
-
-require "black_and_white/railtie" if defined?(Rails::Railtie)
