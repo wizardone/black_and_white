@@ -103,6 +103,18 @@ describe BlackAndWhite do
         expect(subject.ab_tests).to be_empty
         expect(subject.participates?('ab_test_with_conditions')).to eq(false)
       end
+
+      it 'does not participates in an ab test if foreign conditions are not met' do
+        test = true
+        test_lambda = -> { test == true }
+        BlackAndWhite::ActiveRecord::Test.create!(name: 'ab_test_with_conditions')
+        subject.ab_participate!('ab_test_with_conditions') do |subject|
+          test_lambda.call
+        end
+
+        expect(subject.ab_tests).not_to be_empty
+        expect(subject.ab_tests.first.name).to eq('ab_test_with_conditions')
+      end
     end
   end
 end
