@@ -70,10 +70,8 @@ describe BlackAndWhite do
     end
 
     describe '#ab_participate!' do
-      it 'raises an error when no ab test with the given name exists' do
-        expect {
-          subject.ab_participate!('test')
-        }.to raise_error BlackAndWhite::ActiveRecord::AbTestError
+      it 'returns false when no ab test with the given name is present' do
+        expect(subject.ab_participate!('test')).to eq(false)
       end
 
       it 'participates in an ab test without any conditions' do
@@ -125,6 +123,21 @@ describe BlackAndWhite do
 
         expect(subject.ab_tests).not_to be_empty
         expect(subject.ab_tests.first.name).to eq('ab_test_with_conditions')
+      end
+
+      context 'custom options' do
+        it 'raises an error message if raise_on_error option is set' do
+          expect {
+            subject.ab_participate!('test', raise_on_missing: true)
+          }.to raise_error BlackAndWhite::ActiveRecord::AbTestError
+        end
+
+        it 'does not join inactive ab test if join_inactive is set' do
+          create_ab_test!(name: 'inactive_ab_test')
+          subject.ab_participate!('inactive_ab_test', join_inactive: false)
+
+          expect(subject.ab_tests).to be_empty
+        end
       end
     end
 

@@ -1,5 +1,4 @@
 require 'active_support/concern'
-require 'black_and_white/active_record/error'
 
 module BlackAndWhite
   module ActiveRecord
@@ -11,15 +10,16 @@ module BlackAndWhite
                               join_table: BlackAndWhite.config.bw_join_table,
                               association_foreign_key: :ab_test_id
 
-      attr_reader :ab_test
+      attr_reader :ab_test, :options
 
-      def ab_participate!(test_name, &block)
+      def ab_participate!(test_name, **options, &block)
+        @options = options
         if (@ab_test = fetch_ab_test(test_name)).present?
-          condition = true
-          condition = yield(self) if block_given?
-          update_participant if condition
+          conditions = true
+          conditions = yield(self) if block_given?
+          update_participant if conditions
         else
-          raise AbTestError, "no A/B Test with name #{test_name} exists"
+          missing_ab_test(test_name)
         end
       end
 
@@ -33,8 +33,21 @@ module BlackAndWhite
         ab_tests << ab_test
       end
 
+      def missing_ab_test(test_name)
+        unless options[:raise_on_missing]
+          return false
+        end
+
+        raise AbTestError, "no A/B Test with name #{test_name} exists or it is not active"
+      end
+
       def fetch_ab_test(name)
-        BlackAndWhite::ActiveRecord::Test.find_by(name: name)
+        query = { name: name }
+        if options[:join_inactive] == false
+          query.merge!(active: true)
+        end
+
+        BlackAndWhite::ActiveRecord::Test.find_by(query)
       end
     end
   end
