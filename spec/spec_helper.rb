@@ -1,6 +1,11 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'coveralls'
 Coveralls.wear!
+require 'simplecov'
+SimpleCov.start do
+  add_filter '../lib/black_and_white/hooks.rb'
+  add_filter 'support/'
+end
 
 require 'active_record'
 require 'black_and_white/config'
