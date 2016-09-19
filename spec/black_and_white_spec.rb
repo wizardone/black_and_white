@@ -69,7 +69,7 @@ describe BlackAndWhite do
       expect(subject.ab_tests.any?).to eq false
     end
 
-    context 'participate!' do
+    describe '#ab_participate!' do
       it 'raises an error when no ab test with the given name exists' do
         expect {
           subject.ab_participate!('test')
@@ -77,15 +77,26 @@ describe BlackAndWhite do
       end
 
       it 'participates in an ab test without any conditions' do
-        BlackAndWhite::ActiveRecord::Test.create!(name: 'ab_test')
+        create_ab_test!(name: 'ab_test')
         subject.ab_participate!('ab_test')
 
         expect(subject.ab_tests).not_to be_empty
         expect(subject.ab_tests.first.name).to eq('ab_test')
       end
 
+      it 'participates in multiple ab tests' do
+        create_ab_test!(name: 'ab_test_1')
+        create_ab_test!(name: 'ab_test_2')
+
+        subject.ab_participate!('ab_test_1')
+        subject.ab_participate!('ab_test_2')
+
+        expect(subject.ab_tests).not_to be_empty
+        expect(subject.ab_tests.map(&:name)).to eq(['ab_test_1', 'ab_test_2'])
+      end
+
       it 'participates in an ab test if certain conditions met' do
-        BlackAndWhite::ActiveRecord::Test.create!(name: 'ab_test_with_conditions')
+        create_ab_test!(name: 'ab_test_with_conditions')
         subject.ab_participate!('ab_test_with_conditions') do |subject|
           subject.active == true
         end
@@ -95,19 +106,19 @@ describe BlackAndWhite do
       end
 
       it 'does not participates in an ab test if certain conditions are not met' do
-        BlackAndWhite::ActiveRecord::Test.create!(name: 'ab_test_with_conditions')
+        create_ab_test!(name: 'ab_test_with_conditions')
         subject.ab_participate!('ab_test_with_conditions') do |subject|
           subject.active == false
         end
 
         expect(subject.ab_tests).to be_empty
-        expect(subject.participates?('ab_test_with_conditions')).to eq(false)
       end
 
       it 'does not participates in an ab test if foreign conditions are not met' do
         test = true
         test_lambda = -> { test == true }
-        BlackAndWhite::ActiveRecord::Test.create!(name: 'ab_test_with_conditions')
+
+        create_ab_test!(name: 'ab_test_with_conditions')
         subject.ab_participate!('ab_test_with_conditions') do |subject|
           test_lambda.call
         end
@@ -116,5 +127,25 @@ describe BlackAndWhite do
         expect(subject.ab_tests.first.name).to eq('ab_test_with_conditions')
       end
     end
+
+    describe '#ab_participates?' do
+      before { create_ab_test!(name: 'ab_test') }
+
+      it 'returns TRUE, the object participates in the test' do
+        subject.ab_participate!('ab_test')
+
+        expect(subject.ab_participates?('ab_test')).to eq(true)
+      end
+
+      it 'returns FALSE, the object does not participate in the test' do
+        expect(subject.ab_participates?('ab_test')).to eq(false)
+      end
+    end
+  end
+
+  private
+
+  def create_ab_test!(name:)
+    BlackAndWhite::ActiveRecord::Test.create!(name: name)
   end
 end

@@ -15,18 +15,16 @@ module BlackAndWhite
 
       def ab_participate!(test_name, &block)
         if (@ab_test = fetch_ab_test(test_name)).present?
-          if block_given?
-            update_participant if block.call(self)
-          else
-            update_participant
-          end
+          condition = true
+          condition = yield(self) if block_given?
+          update_participant if condition
         else
           raise AbTestError, "no A/B Test with name #{test_name} exists"
         end
       end
 
-      def participates?(test_name)
-        ab_tests.where(name: test_name).any?
+      def ab_participates?(test_name)
+        ab_tests.detect { |ab_test| ab_test.name == test_name }.present?
       end
 
       private
