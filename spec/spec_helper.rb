@@ -11,7 +11,6 @@ require 'active_record'
 require 'black_and_white/config'
 
 require 'black_and_white'
-require 'black_and_white/active_record/participant'
 require 'black_and_white/active_record/test'
 require 'black_and_white/active_record/error'
 require 'black_and_white/helpers/utils'
