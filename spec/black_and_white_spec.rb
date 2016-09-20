@@ -15,6 +15,20 @@ describe BlackAndWhite do
     end
   end
 
+  describe '.create' do
+    it 'creates an ab test with required params' do
+      expect {
+        BlackAndWhite.create(name: 'ab_test')
+      }.to change { BlackAndWhite::ActiveRecord::Test.count }.by(1)
+    end
+
+    it 'creates ab test with required and optional params' do
+      expect {
+        BlackAndWhite.create(name: 'ab_test', active: true)
+      }.to change { BlackAndWhite::ActiveRecord::Test.count }.by(1)
+    end
+  end
+
   context 'ActiveRecord' do
     context 'helper methods' do
       subject do

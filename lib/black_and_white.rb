@@ -6,6 +6,7 @@ require "black_and_white/active_record/error"
 require "black_and_white/helpers/utils"
 
 module BlackAndWhite
-  def self.participate(ab_test, object, &block)
+  def self.create(args = {})
+    ActiveRecord::Test.create(args)
   end
 end
