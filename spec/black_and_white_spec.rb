@@ -15,7 +15,7 @@ describe BlackAndWhite do
   end
 
   describe '.config' do
-    it 'returns a config instance' do
+    it 'returns the default config instance' do
       expect(BlackAndWhite.config).to be_a(BlackAndWhite::Config)
       expect(BlackAndWhite.config.bw_main_table).to eq(BlackAndWhite::Config.new.bw_main_table)
       expect(BlackAndWhite.config.bw_join_table).to eq(BlackAndWhite::Config.new.bw_join_table)
