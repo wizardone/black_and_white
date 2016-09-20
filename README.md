@@ -27,7 +27,18 @@ use it first run:
 rails g black_and_white:config
 ```
 this will create a `black_and_white.rb` config file in
-`config/initializers` with some default values.
+`config/initializers` with some default values. The file looks like this:
+```ruby
+BlackAndWhite.configure do |config|
+  config.bw_class = 'User'
+  config.bw_class_table = :users
+  config.bw_main_table = :ab_test
+  config.bw_join_table = :ab_tests_users
+end
+  
+BlackAndWhite::Hooks.init
+```
+
 After this run:
 ```ruby
 rails g black_and_white:migrations
@@ -35,7 +46,7 @@ rails g black_and_white:migrations
 this will create the necessary migrations in the `db/migrate` folder.
 Review them and then feel free to migrate.
 
-### For `ActiveRecord` objects:
+### For ActiveRecord objects:
 Include the black_and_white module for activerecord interactions:
 ```ruby
 class User < ActiveRecord::Base

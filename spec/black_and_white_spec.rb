@@ -6,12 +6,21 @@ describe BlackAndWhite do
   end
 
   describe '.configure' do
-    skip
+    it 'yields the passed block to .configure' do
+      bl = proc { |config| config.bw_class = 'Person' }
+      expect { |bl|
+        BlackAndWhite.configure(&bl)
+      }.to yield_with_args(&bl)
+    end
   end
 
   describe '.config' do
     it 'returns a config instance' do
       expect(BlackAndWhite.config).to be_a(BlackAndWhite::Config)
+      expect(BlackAndWhite.config.bw_main_table).to eq(BlackAndWhite::Config.new.bw_main_table)
+      expect(BlackAndWhite.config.bw_join_table).to eq(BlackAndWhite::Config.new.bw_join_table)
+      expect(BlackAndWhite.config.bw_class).to eq(BlackAndWhite::Config.new.bw_class)
+      expect(BlackAndWhite.config.bw_class_table).to eq(BlackAndWhite::Config.new.bw_class_table)
     end
   end
 
