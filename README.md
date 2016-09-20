@@ -35,11 +35,29 @@ rails g black_and_white:migrations
 this will create the necessary migrations in the `db/migrate` folder.
 Review them and then feel free to migrate.
 
-## Development
+### For `ActiveRecord` objects:
+Include the black_and_white module for activerecord interactions:
+```ruby
+class User < ActiveRecord::Base
+  include BlackAndWhite::ActiveRecord
+end
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To create a new A/B test you can run:
+```ruby
+BlackAndWhite.create(name: 'My Test', active: true)
+```
+By default all created tests are inactive.
+To add existing users (or any other object) to the A/B Test you can call:
+```ruby
+user.ab_participate!('My Test')
+```
+You can also supply an additional block which is evaluated:
+```ruby
+user.ab_participate!('My Test') do |user|
+  user.admin? # returns true, user is added to the ab test
+end
+```
 
 ## Contributing
 
