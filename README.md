@@ -48,7 +48,7 @@ this will create the necessary migrations in the `db/migrate` folder.
 Review them and then feel free to migrate.
 
 ### For ActiveRecord objects:
-Include the black_and_white module for activerecord interactions:
+Include the black_and_white module for activerecord interactions. The base class may have multiple a/b tests:
 ```ruby
 class User < ActiveRecord::Base
   include BlackAndWhite::ActiveRecord
@@ -63,6 +63,10 @@ By default all created tests are inactive.
 To add existing users (or any other object) to the A/B Test you can call:
 ```ruby
 user.ab_participate!('My Test')
+user.ab_tests.size
+=> 1
+user.ab_participates?('My Test')
+=> true
 ```
 You can also supply an additional block which is evaluated:
 ```ruby
@@ -71,6 +75,7 @@ user.ab_participate!('My Test') do |user|
 end
 ```
 A couple of additional options are supported as well:
+
 `join_inactive` => Join an a/b test, even if it is inactive
 ```ruby
 user.ab_participate!('My Inactive test', join_inactive: true)
