@@ -70,10 +70,20 @@ user.ab_participate!('My Test') do |user|
   user.admin? # returns true, user is added to the ab test
 end
 ```
+A couple of additional options are supported as well:
+`join_inactive` => Join an a/b test, even if it is inactive
+```ruby
+user.ab_participate!('My Inactive test', join_inactive: true)
+```
+`raise_on_missing` => raises a custom error message if the given a/b test does not exist
+```ruby
+user.ab_participate!('My Inactive test', raise_on_missing: true)
+=> AbTestError, "no A/B Test with name My Inactive test exists or it is not active"
+```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/black_and_white. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/wizardone/black_and_white. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 ## License
