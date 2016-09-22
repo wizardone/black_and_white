@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Stefan Slaveykov"]
   spec.email         = ["wizard.oneandonly@gmail.com"]
 
-  spec.summary       = %q{A/B testing}
+  spec.summary       = %q{A/B testing for ActiveRecord}
   spec.description   = %q{A/B testing made easy}
   spec.homepage      = "https://github.com/wizardone/black_and_white"
   spec.license       = "MIT"
@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
   # delete this section to allow pushing this gem to any host.
   if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
+    #spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
   else
     raise "RubyGems 2.0 or newer is required to protect against public gem pushes."
   end
@@ -35,5 +35,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "pg"
   spec.add_development_dependency "byebug"
   spec.add_development_dependency 'database_cleaner'
-  spec.add_development_dependency 'coveralls'
 end

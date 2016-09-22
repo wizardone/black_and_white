@@ -1,6 +1,7 @@
 # BlackAndWhite
 [![Build Status](https://travis-ci.org/wizardone/black_and_white.svg?branch=master)](https://travis-ci.org/wizardone/black_and_white)
-[![Coverage Status](https://coveralls.io/repos/github/wizardone/black_and_white/badge.svg?branch=HEAD)](https://coveralls.io/github/wizardone/black_and_white?branch=HEAD)
+[![codecov](https://codecov.io/gh/wizardone/black_and_white/branch/master/graph/badge.svg)](https://codecov.io/gh/wizardone/black_and_white)
+
 
 ### A/B Testing made easy
 
