@@ -48,6 +48,10 @@ describe BlackAndWhite do
         expect(subject.bw_tests_table_name).to eq(BlackAndWhite.config.bw_main_table)
       end
 
+      it 'returns the configuration main table name singularized' do
+        expect(subject.bw_tests_table_name_singularize).to eq(BlackAndWhite.config.bw_main_table.to_s.singularize)
+      end
+
       it 'returns the configuration relation table name' do
         expect(subject.bw_relations_table_name).to eq(BlackAndWhite.config.bw_join_table)
       end
@@ -59,6 +63,11 @@ describe BlackAndWhite do
       it 'returns the configuration main model table' do
         expect(subject.bw_tests_class_table)
           .to eq(BlackAndWhite.config.bw_class_table)
+      end
+
+      it 'returns the configuration main model table singularized' do
+        expect(subject.bw_tests_class_table_singularize)
+          .to eq(BlackAndWhite.config.bw_class_table.to_s.singularize)
       end
     end
   end
