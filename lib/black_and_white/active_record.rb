@@ -34,11 +34,10 @@ module BlackAndWhite
       end
 
       def missing_ab_test(test_name)
-        unless options[:raise_on_missing]
-          return false
+        if options[:raise_on_missing]
+          raise AbTestError, "no A/B Test with name #{test_name} exists or it is not active"
         end
-
-        raise AbTestError, "no A/B Test with name #{test_name} exists or it is not active"
+        false
       end
 
       def fetch_ab_test(name)
