@@ -69,6 +69,11 @@ describe BlackAndWhite do
         expect(subject.bw_tests_class_table_singularize)
           .to eq(BlackAndWhite.config.bw_class_table.to_s.singularize)
       end
+
+      it 'returns the configuration main table pluralized' do
+        expect(subject.bw_tests_table_name_pluralize)
+          .to eq(BlackAndWhite.config.bw_main_table.to_s.pluralize)
+      end
     end
   end
 

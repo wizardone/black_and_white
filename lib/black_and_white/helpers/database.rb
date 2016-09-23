@@ -1,10 +1,6 @@
 module BlackAndWhite
   module Helpers
     module Database
-      def bw_tests_table_name_pluralize
-        BlackAndWhite.config.bw_main_table.to_s.pluralize
-      end
-
       def bw_tests_table_data
         <<RUBY
           t.string :name, unique: true, null: false
@@ -42,6 +38,10 @@ RUBY
 
       def bw_tests_class_table_singularize
         BlackAndWhite.config.bw_class_table.to_s.singularize
+      end
+
+      def bw_tests_table_name_pluralize
+        BlackAndWhite.config.bw_main_table.to_s.pluralize
       end
 
       def migration_version
