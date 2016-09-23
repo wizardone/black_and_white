@@ -16,7 +16,7 @@ RUBY
       def bw_relations_table_data
         <<RUBY
         t.references :#{bw_tests_class_table}, index: true
-        t.references :#{bw_tests_table_name_pluralize}, index: true
+        t.references :#{bw_tests_table_name}, index: true
 RUBY
       end
 
@@ -25,7 +25,7 @@ RUBY
       end
 
       def bw_tests_table_name
-        BlackAndWhite.config.bw_main_table
+        BlackAndWhite.config.bw_main_table.to_s.singularize
       end
 
       def bw_tests_class
@@ -33,7 +33,7 @@ RUBY
       end
 
       def bw_tests_class_table
-        BlackAndWhite.config.bw_class_table
+        BlackAndWhite.config.bw_class_table.to_s.singularize
       end
 
       def migration_version

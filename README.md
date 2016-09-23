@@ -10,7 +10,7 @@
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'black_and_white'
+gem 'black_and_white', '~> 0.1.4'
 ```
 
 And then execute:
