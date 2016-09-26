@@ -39,7 +39,37 @@ describe BlackAndWhite do
   end
 
   context 'ActiveRecord' do
+
+    context 'utils' do
+      it 'returns the proper activerecord version 4' do
+        stub_const('::ActiveRecord::VERSION::MAJOR', 4)
+
+        expect(BlackAndWhite::Helpers::Utils.active_record_4?).to eq(true)
+      end
+
+      it 'returns the proper activerecord version 5' do
+        stub_const('::ActiveRecord::VERSION::MAJOR', 5)
+
+        expect(BlackAndWhite::Helpers::Utils.active_record_5?).to eq(true)
+      end
+
+      it 'returns the proper activerecord version 3' do
+        stub_const('::ActiveRecord::VERSION::MAJOR', 3)
+
+        expect(BlackAndWhite::Helpers::Utils.active_record_3?).to eq(true)
+      end
+    end
+
     context 'helper methods' do
+
+      let(:rails) do
+        module Rails
+          module Version
+            MAJOR = 5
+            MINOR = 0
+          end
+        end
+      end
       subject do
         Class.new { extend BlackAndWhite::Helpers::Database }
       end
@@ -73,6 +103,24 @@ describe BlackAndWhite do
       it 'returns the configuration main table pluralized' do
         expect(subject.bw_tests_table_name_pluralize)
           .to eq(BlackAndWhite.config.bw_main_table.to_s.pluralize)
+      end
+
+      it 'returns a migration version for activerecord 5' do
+        module Rails
+          def self.version
+            Class.new do
+              def self.start_with?(version)
+                true
+              end
+            end
+          end
+          module VERSION
+            MAJOR = 5
+            MINOR = 0
+          end
+        end
+
+        expect(subject.migration_version).to eq("[#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}]")
       end
     end
   end

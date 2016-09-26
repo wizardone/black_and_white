@@ -45,7 +45,7 @@ RUBY
       end
 
       def migration_version
-        if defined?(::Rails) && ::Rails.version.start_with?('5')
+        if defined?(Rails) && Rails.version.start_with?('5')
           "[#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}]"
         end
       end
