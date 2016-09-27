@@ -6,7 +6,12 @@ require "black_and_white/active_record/error"
 require "black_and_white/helpers/utils"
 
 module BlackAndWhite
+
   def self.create(args = {})
     ActiveRecord::Test.create(args)
+  end
+
+  def self.add(klass, &block)
+    klass.class_eval(&block)
   end
 end

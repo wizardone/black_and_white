@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe BlackAndWhite do
+
   it 'has a version number' do
     expect(BlackAndWhite::VERSION).not_to be nil
   end
@@ -38,6 +39,18 @@ describe BlackAndWhite do
     end
   end
 
+  describe '.add' do
+    subject { User.new }
+
+    it 'yields additional code to the black and white module' do
+      expect(subject).to receive(:class_eval).and_yield
+
+      BlackAndWhite.add(subject) do
+        def my_custom_method; end
+      end
+    end
+  end
+
   context 'ActiveRecord' do
 
     context 'utils' do
@@ -61,15 +74,6 @@ describe BlackAndWhite do
     end
 
     context 'helper methods' do
-
-      let(:rails) do
-        module Rails
-          module Version
-            MAJOR = 5
-            MINOR = 0
-          end
-        end
-      end
       subject do
         Class.new { extend BlackAndWhite::Helpers::Database }
       end
@@ -222,6 +226,24 @@ describe BlackAndWhite do
           subject.ab_participate!('inactive_ab_test', join_inactive: false)
 
           expect(subject.ab_tests).to be_empty
+        end
+      end
+
+      context 'Extra logic addition to BlackAndWhite' do
+        it 'evaluates extra code passed to black and white module' do
+          subject.instance_eval do
+            BlackAndWhite.add(self) do
+              def added_method
+                "added method"
+              end
+
+              def is_added?
+                true
+              end
+            end
+          end
+          expect(subject.added_method).to eq('added method')
+          expect(subject.is_added?).to be_truthy
         end
       end
     end

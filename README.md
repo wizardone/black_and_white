@@ -10,7 +10,7 @@
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'black_and_white', '~> 0.1.5'
+gem 'black_and_white', '~> 0.1.6'
 ```
 
 And then execute:
@@ -36,7 +36,7 @@ BlackAndWhite.configure do |config|
   config.bw_main_table = :ab_tests
   config.bw_join_table = :ab_tests_users
 end
-  
+
 BlackAndWhite::Hooks.init
 ```
 
@@ -45,7 +45,8 @@ After this run:
 rails g black_and_white:migrations
 ```
 this will create the necessary migrations in the `db/migrate` folder.
-Review them and then feel free to migrate.
+Review them and then feel free to migrate. Keep in mind that they give
+you only some very basic columns. You can add as much as you want.
 
 ### For ActiveRecord objects:
 Include the black_and_white module for activerecord interactions. The base class may have multiple a/b tests:
@@ -84,6 +85,19 @@ user.ab_participate!('My Inactive test', join_inactive: true)
 ```ruby
 user.ab_participate!('My Inactive test', raise_on_missing: true)
 => AbTestError, "no A/B Test with name My Inactive test exists or it is not active"
+```
+
+If you added additional db colums or you want to add or extend more logic you can
+use the `add` method which evaluates the given block in the scope of
+the main `BlackAndWhite` module. That way you don't have to worry about
+code location
+```ruby
+model User < ActiveRecord::Base
+  include BlackAndWhite::ActiveRecord
+  BlackAndWhite.add(self) do
+    def my_new_method; end
+  end
+end
 ```
 
 ## Contributing
