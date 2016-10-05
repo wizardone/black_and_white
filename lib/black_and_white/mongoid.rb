@@ -1,1 +1,5 @@
-# Implement me at some point, please
+module BlackAndWhite
+  module Mongoid
+    extend ActiveSupport::Concern
+  end
+end
