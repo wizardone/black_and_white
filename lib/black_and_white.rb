@@ -13,7 +13,6 @@ module BlackAndWhite
 
   def self.create(args = {})
     Helpers::Broker.invoke(:create, args)
-    #ActiveRecord::Test.create(args)
   end
 
   def self.add(klass, &block)

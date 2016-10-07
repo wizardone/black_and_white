@@ -5,7 +5,7 @@ module BlackAndWhite
       class << self
         attr_accessor :orm
 
-        def invoke(method, args)
+        def invoke(method, args = {})
           if orm == :active_record
             ActiveRecord::Test.send(method, args)
           elsif orm == :mongoid
