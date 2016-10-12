@@ -4,17 +4,22 @@ require File.expand_path('support/rspec.rb', __dir__)
 require 'byebug'
 if ENV['BAW_MONGOID']
   require 'mongoid'
-  require 'black_and_white'
+  #require 'black_and_white'
+  require 'black_and_white/config'
+  require 'black_and_white/hooks'
+  require 'black_and_white/broker'
   Mongoid.load!(File.expand_path('support/mongoid/mongoid.yml', __dir__), :test)
+  BlackAndWhite::Hooks.init
   Dir[[File.expand_path(__dir__), 'support/mongoid/**/*.rb'].join('/')].each { |f| require f }
-
-  BlackAndWhite::Helpers::Broker.register(:mongoid)
 elsif ENV['BAW_ACTIVERECORD']
-  require 'black_and_white'
-  require 'black_and_white/active_record/test'
-  Dir[[File.expand_path(__dir__), 'support/active_record/**/*.rb'].join('/')].each { |f| require f }
+  require 'active_record'
+  require 'black_and_white/config'
+  require 'black_and_white/hooks'
+  require 'black_and_white/broker'
 
-  BlackAndWhite::Helpers::Broker.register(:active_record)
+  BlackAndWhite::Hooks.init
+
+  Dir[[File.expand_path(__dir__), 'support/active_record/**/*.rb'].join('/')].each { |f| require f }
 else
   # TODO: throw a proper error message
   raise "You must run the spec agains an ORM"

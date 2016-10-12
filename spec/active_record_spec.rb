@@ -56,25 +56,25 @@ describe BlackAndWhite, activerecord: true do
       it 'returns the proper activerecord version 4' do
         stub_const('::ActiveRecord::VERSION::MAJOR', 4)
 
-        expect(BlackAndWhite::Helpers::Utils.active_record_4?).to eq(true)
+        expect(BlackAndWhite::Helpers::ActiveRecord::Utils.active_record_4?).to eq(true)
       end
 
       it 'returns the proper activerecord version 5' do
         stub_const('::ActiveRecord::VERSION::MAJOR', 5)
 
-        expect(BlackAndWhite::Helpers::Utils.active_record_5?).to eq(true)
+        expect(BlackAndWhite::Helpers::ActiveRecord::Utils.active_record_5?).to eq(true)
       end
 
       it 'returns the proper activerecord version 3' do
         stub_const('::ActiveRecord::VERSION::MAJOR', 3)
 
-        expect(BlackAndWhite::Helpers::Utils.active_record_3?).to eq(true)
+        expect(BlackAndWhite::Helpers::ActiveRecord::Utils.active_record_3?).to eq(true)
       end
     end
 
     context 'helper methods' do
       subject do
-        Class.new { extend BlackAndWhite::Helpers::Database }
+        Class.new { extend BlackAndWhite::Helpers::ActiveRecord::Database }
       end
 
       it 'returns the configuration main table name' do

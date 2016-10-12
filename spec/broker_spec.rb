@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe BlackAndWhite::Helpers::Broker do
+describe BlackAndWhite::Broker do
   subject { described_class }
 
   describe '.register' do

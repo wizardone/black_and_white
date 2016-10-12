@@ -1,6 +1,5 @@
 require 'active_record'
 require 'active_support/inflector'
-require 'black_and_white/helpers/database'
 
 module BlackAndWhite
   module ActiveRecord
