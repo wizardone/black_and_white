@@ -13,6 +13,7 @@ module BlackAndWhite
         BlackAndWhite::Broker.register(:mongoid)
         require 'black_and_white/mongoid'
         require 'black_and_white/mongoid/test'
+        require 'black_and_white/mongoid/error'
       end
     end
   end

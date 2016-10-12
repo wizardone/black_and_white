@@ -41,7 +41,7 @@ module BlackAndWhite
           query.merge!(active: true)
         end
 
-        BlackAndWhite::ActiveRecord::Test.find_by(query)
+        BlackAndWhite::Mongoid::Test.find_by(query)
       end
     end
   end
