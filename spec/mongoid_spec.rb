@@ -110,7 +110,7 @@ describe BlackAndWhite, mongoid: true do
         it 'raises an error message if raise_on_error option is set' do
           expect {
             subject.ab_participate!('test', raise_on_missing: true)
-          }.to raise_error BlackAndWhite::Mongoid::AbTestError
+          }.to raise_error BlackAndWhite::AbTestError
         end
 
         it 'does not join inactive ab test if join_inactive is set' do
