@@ -3,6 +3,7 @@ module BlackAndWhite
     def self.init
       require 'black_and_white'
       require 'black_and_white/error'
+      require 'black_and_white/helpers/methods'
       if defined?(::ActiveRecord)
         BlackAndWhite::Broker.register(:active_record)
         require 'black_and_white/active_record'

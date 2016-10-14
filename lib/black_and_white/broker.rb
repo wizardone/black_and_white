@@ -4,11 +4,11 @@ module BlackAndWhite
     class << self
       attr_accessor :orm
 
-      def invoke(method, args = {})
+      def invoke(method, *args)
         if orm == :active_record
-          BlackAndWhite::ActiveRecord::Test.send(method, args)
+          BlackAndWhite::ActiveRecord::Test.send(method, *args)
         elsif orm == :mongoid
-          BlackAndWhite::Mongoid::Test.send(method, args)
+          BlackAndWhite::Mongoid::Test.send(method, *args)
         end
       end
 
