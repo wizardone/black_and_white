@@ -10,7 +10,7 @@
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'black_and_white', '~> 0.1.6'
+gem 'black_and_white', '~> 0.2.0'
 ```
 
 And then execute:
@@ -22,7 +22,8 @@ Or install it yourself as:
     $ gem install black_and_white
 
 ## Usage
-Black And White is meant to work with Rails for the moment. In order to
+Black And White is meant to work with Rails for the moment. It has
+support for ActiveRecord and Mongoid. In order to
 use it first run:
 ```ruby
 rails g black_and_white:config
@@ -39,20 +40,30 @@ end
 
 BlackAndWhite::Hooks.init
 ```
+The `Hooks` class requires all the necessary files for the detected
+orm. If you are using `ActiveRecord` you need to generate the
+corresponding migrations with:
 
-After this run:
 ```ruby
 rails g black_and_white:migrations
 ```
-this will create the necessary migrations in the `db/migrate` folder.
 Review them and then feel free to migrate. Keep in mind that they give
-you only some very basic columns. You can add as much as you want.
+you only some very basic columns. You can add as much as you want and
+extend the logic
 
-### For ActiveRecord objects:
+### For ActiveRecord
 Include the black_and_white module for activerecord interactions. The base class may have multiple a/b tests:
 ```ruby
 class User < ActiveRecord::Base
   include BlackAndWhite::ActiveRecord
+end
+```
+### For Mongoid
+Include the black_and_white module for activerecord interactions. The base class may have multiple a/b tests:
+```ruby
+class User
+  include Mongoid::Document
+  include BlackAndWhite::Mongoid
 end
 ```
 
@@ -86,17 +97,18 @@ user.ab_participate!('My Inactive test', join_inactive: true)
 user.ab_participate!('My Inactive test', raise_on_missing: true)
 => AbTestError, "no A/B Test with name My Inactive test exists or it is not active"
 ```
+A note for `Mongoid`: If you have `Mongoid.raise_not_found_error` this
+will raise the generic mongoid error for not found documents.
 
 If you added additional db colums or you want to add or extend more logic you can
 use the `add` method which evaluates the given block in the scope of
 the main `BlackAndWhite` module. That way you don't have to worry about
-code location
+code location.
 ```ruby
-model User < ActiveRecord::Base
-  include BlackAndWhite::ActiveRecord
-  BlackAndWhite.add(self) do
-    def my_new_method; end
-  end
+BlackAndWhite.add(self) do
+  def my_new_method; end
+  private
+  attr_reader :my_property
 end
 ```
 
