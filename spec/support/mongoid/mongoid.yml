@@ -1,0 +1,6 @@
+test:
+  clients:
+    default:
+      database: black_and_white
+      hosts:
+        - localhost:27017

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-describe BlackAndWhite do
-
+describe BlackAndWhite, activerecord: true do
   it 'has a version number' do
     expect(BlackAndWhite::VERSION).not_to be nil
   end
@@ -57,25 +56,25 @@ describe BlackAndWhite do
       it 'returns the proper activerecord version 4' do
         stub_const('::ActiveRecord::VERSION::MAJOR', 4)
 
-        expect(BlackAndWhite::Helpers::Utils.active_record_4?).to eq(true)
+        expect(BlackAndWhite::Helpers::ActiveRecord::Utils.active_record_4?).to eq(true)
       end
 
       it 'returns the proper activerecord version 5' do
         stub_const('::ActiveRecord::VERSION::MAJOR', 5)
 
-        expect(BlackAndWhite::Helpers::Utils.active_record_5?).to eq(true)
+        expect(BlackAndWhite::Helpers::ActiveRecord::Utils.active_record_5?).to eq(true)
       end
 
       it 'returns the proper activerecord version 3' do
         stub_const('::ActiveRecord::VERSION::MAJOR', 3)
 
-        expect(BlackAndWhite::Helpers::Utils.active_record_3?).to eq(true)
+        expect(BlackAndWhite::Helpers::ActiveRecord::Utils.active_record_3?).to eq(true)
       end
     end
 
     context 'helper methods' do
       subject do
-        Class.new { extend BlackAndWhite::Helpers::Database }
+        Class.new { extend BlackAndWhite::Helpers::ActiveRecord::Database }
       end
 
       it 'returns the configuration main table name' do
@@ -218,7 +217,7 @@ describe BlackAndWhite do
         it 'raises an error message if raise_on_error option is set' do
           expect {
             subject.ab_participate!('test', raise_on_missing: true)
-          }.to raise_error BlackAndWhite::ActiveRecord::AbTestError
+          }.to raise_error BlackAndWhite::AbTestError
         end
 
         it 'does not join inactive ab test if join_inactive is set' do

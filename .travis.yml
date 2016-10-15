@@ -1,4 +1,10 @@
 language: ruby
 rvm:
   - 2.3.0
-before_install: gem install bundler -v 1.11.2
+before_install:
+- gem install bundler -v 1.11.2
+services:
+- mongodb
+script:
+- BAW_ACTIVERECORD=1 bundle exec rake
+- BAW_MONGOID=1 bundle exec rake

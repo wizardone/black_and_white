@@ -6,4 +6,6 @@
 /doc/
 /pkg/
 /spec/reports/
+/spec/coverage
 /tmp/
+/.byebug_history
